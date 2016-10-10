@@ -114,16 +114,7 @@ class myHTTPFileArchive(http.server.BaseHTTPRequestHandler):
         return (False, "Unexpect Ends of data.")
  
     def send_head(self):
-        """Common code for GET and HEAD commands.
 
-        This sends the response code and MIME headers.
-
-        Return value is either a file object (which has to be copied
-        to the outputfile by the caller unless the command was HEAD,
-        and must be closed by the caller under all circumstances), or
-        None, in which case the caller has nothing further to do.
-
-        """
         path = self.translate_path(self.path)
         f = None
         if os.path.isdir(path):
