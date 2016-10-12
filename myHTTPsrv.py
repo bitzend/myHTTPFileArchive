@@ -41,7 +41,8 @@ class myHTTPFileArchive(http.server.BaseHTTPRequestHandler):
         f = BytesIO()
         f.write(b'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
         f.write(b"<html>\n<title>Upload Result Page</title>\n")
-        f.write(b"<body>\n<h2>Upload Result Page</h2>\n")
+        f.write(b'<body style="height:100%;background-color:LightGrey"><div style="background-color:LightGrey;text-align:center">')
+        f.write(b"<h2>Upload Result Page</h2>\n")
         f.write(b"<hr>\n")
         if r:
             f.write(b"<strong>Success:</strong>")
@@ -51,7 +52,7 @@ class myHTTPFileArchive(http.server.BaseHTTPRequestHandler):
         f.write(("<br><a href=\"%s\">back</a>" % self.headers['referer']).encode())
         f.write(b"<hr><small>Powerd By: bitPi")
 
-        f.write(b"</small></body>\n</html>\n")
+        f.write(b"</small></div></body>\n</html>\n")
         length = f.tell()
         f.seek(0)
         self.send_response(200)
@@ -160,12 +161,13 @@ class myHTTPFileArchive(http.server.BaseHTTPRequestHandler):
         displaypath = cgi.escape(urllib.parse.unquote(self.path))
         f.write(b'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
         f.write(("<html>\n<title>Directory listing for /archive%s</title>\n" % displaypath).encode())
-        f.write(("<body>\n<h2>Directory listing for /archive%s</h2>\n" % displaypath).encode())
+        f.write(b'<body style="height:100%;background-color:LightGrey"><div style="background-color:LightGrey;text-align:center;height:100%;width:100%">')
+        f.write(("<h2>Directory listing for /archive%s</h2>\n" % displaypath).encode())
         f.write(b"<hr>\n")
         f.write(b"<form ENCTYPE=\"multipart/form-data\" method=\"post\">")
         f.write(b"<input name=\"file\" type=\"file\"/>")
         f.write(b"<input type=\"submit\" value=\"upload\"/></form>\n")
-        f.write(b"<hr>\n<ul>\n")
+        f.write(b'<hr>\n<ul style="list-style: none;padding:0;margin:0">\n')
         for name in list:
 
             arkPath = os.path.join(path, "archive/")
@@ -185,7 +187,7 @@ class myHTTPFileArchive(http.server.BaseHTTPRequestHandler):
                 # Note: a link to a directory displays with @ and links with /
             f.write(('<li><a href="%s">%s</a>\n'
                     % (urllib.parse.quote(linkname), cgi.escape(displayname))).encode())
-        f.write(b"</ul>\n<hr>\n</body>\n</html>\n")
+        f.write(b"</ul>\n<hr>\n</div></body>\n</html>\n")
         length = f.tell()
         f.seek(0)
         self.send_response(200)
