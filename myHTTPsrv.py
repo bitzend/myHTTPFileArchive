@@ -112,7 +112,7 @@ class myHTTPFileArchive(http.server.BaseHTTPRequestHandler):
             else:
                 out.write(preline)
                 preline = line
-        return (False, "Unexpect Ends of data.")
+        return (False, "Unexpected end of data.")
  
     def send_head(self):
 
